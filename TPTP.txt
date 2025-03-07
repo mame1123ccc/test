@@ -21,7 +21,7 @@ local function onKeyPress(input, gameProcessed)
 		end
 
 		-- テレポート先の座標（ここを変更すれば好きな座標に飛ばせる）
-		local teleportPosition = Vector3.new(50, 10, 50)
+		local teleportPosition = Vector3.new(-1000, 10, -1000)
 
 		-- プレイヤーを指定の座標にテレポート
 		humanoidRootPart.CFrame = CFrame.new(teleportPosition)
