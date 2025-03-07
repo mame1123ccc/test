@@ -1,0 +1,38 @@
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local player = Players.LocalPlayer
+
+-- 最新の `HumanoidRootPart` を取得する関数
+local function getHumanoidRootPart()
+	local character = player.Character or player.CharacterAdded:Wait()
+	return character:WaitForChild("HumanoidRootPart", 5) -- 5秒待って取得
+end
+
+-- キーが押されたときの処理
+local function onKeyPress(input, gameProcessed)
+	if gameProcessed then return end -- チャット入力などで処理されていたら無視
+
+	if input.KeyCode == Enum.KeyCode.G then
+		local humanoidRootPart = getHumanoidRootPart()
+
+		if not humanoidRootPart then
+			warn("HumanoidRootPart が取得できませんでした！")
+			return
+		end
+
+		-- テレポート先の座標（ここを変更すれば好きな座標に飛ばせる）
+		local teleportPosition = Vector3.new(537, 290, 33286)
+
+		-- プレイヤーを指定の座標にテレポート
+		humanoidRootPart.CFrame = CFrame.new(teleportPosition)
+	end
+end
+
+-- キーボード入力を監視
+UserInputService.InputBegan:Connect(onKeyPress)
+
+-- キャラクターがリスポーンしたら `HumanoidRootPart` を確実に取得する
+player.CharacterAdded:Connect(function()
+	wait(1) -- キャラが安定するまで少し待つ
+	getHumanoidRootPart()
+end)
