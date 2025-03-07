@@ -1,0 +1,40 @@
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local player = Players.LocalPlayer
+local humanoidRootPart
+
+-- HumanoidRootPartを取得する関数
+local function updateHumanoidRootPart()
+    local character = player.Character or player.CharacterAdded:Wait()
+    humanoidRootPart = character:WaitForChild("HumanoidRootPart", 5)
+    if not humanoidRootPart then
+        warn("HumanoidRootPart が取得できませんでした！")
+    end
+end
+
+-- キーが押されたときの処理
+local function onKeyPress(input, gameProcessed)
+    if gameProcessed then return end -- 他の入力処理と競合しないようにする
+
+    if input.KeyCode == Enum.KeyCode.G then
+        if humanoidRootPart then
+            -- テレポート先の座標（必要に応じて変更してください）
+            local teleportPosition = Vector3.new(1151, 292, 33312)
+            -- プレイヤーを指定の座標にテレポート
+            humanoidRootPart.CFrame = CFrame.new(teleportPosition)
+        else
+            warn("HumanoidRootPart が存在しないため、テレポートできません。")
+        end
+    end
+end
+
+-- 初期のHumanoidRootPartを設定
+updateHumanoidRootPart()
+
+-- キャラクターがリスポーンしたらHumanoidRootPartを更新
+player.CharacterAdded:Connect(function()
+    updateHumanoidRootPart()
+end)
+
+-- キーボード入力を監視
+UserInputService.InputBegan:Connect(onKeyPress)
