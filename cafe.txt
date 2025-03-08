@@ -1,5 +1,5 @@
 -- テレポート先の座標を設定（例: X=100, Y=10, Z=100）
-local targetPosition = Vector3.new(-616.3281860351562, 71.2262954711914, 163.5627899169922)
+local targetPosition = Vector3.new(-616.3281860351562, 73.2262954711914, 163.5627899169922)
 
 -- テレポートする向きを設定（例: X=0, Y=90, Z=0の向き）
 local targetOrientation = Vector3.new(0, 90, 0) -- Y軸を90度回転させる例
