@@ -1,0 +1,2 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/mame1123ccc/test/refs/heads/main/TPTP.txt"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/mame1123ccc/test/refs/heads/main/cafe.txt"))()
