@@ -1,0 +1,36 @@
+-- テレポート先の座標を設定（例: X=100, Y=10, Z=100）
+local targetPosition = Vector3.new(-616.3281860351562, 71.2262954711914, 163.5627899169922)
+
+-- テレポートする向きを設定（例: X=0, Y=90, Z=0の向き）
+local targetOrientation = Vector3.new(0, 90, 0) -- Y軸を90度回転させる例
+
+-- プレイヤーのキャラクターを取得する関数
+local function setupTeleport()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+    -- Gキーが押されたときにテレポートする
+    local function onKeyPress(input, gameProcessedEvent)
+        if gameProcessedEvent then return end  -- ゲームがすでに入力を処理している場合は無視
+
+        -- Gキーが押された場合にテレポート
+        if input.KeyCode == Enum.KeyCode.H then
+            -- 向きを指定してテレポート（指定した向きでCFrameを作成）
+            local targetCFrame = CFrame.new(targetPosition) * CFrame.Angles(0, math.rad(targetOrientation.Y), 0)
+            humanoidRootPart.CFrame = targetCFrame
+            print(player.Name .. " has been teleported to the new position with orientation!")
+        end
+    end
+
+    -- 入力の監視
+    game:GetService("UserInputService").InputBegan:Connect(onKeyPress)
+end
+
+-- キャラクターが追加されたときに再設定
+game.Players.LocalPlayer.CharacterAdded:Connect(function()
+    setupTeleport()  -- キャラクターがリスポーンしたらテレポート機能を再設定
+end)
+
+-- 最初にテレポート機能を設定
+setupTeleport()
